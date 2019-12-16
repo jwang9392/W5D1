@@ -1,4 +1,4 @@
-class MaxIntSet
+class MaxIntSet #shortcoming: (1) potentially high space complexity depending on size of array ++ (2) out of range possibility 
 attr_accessor :store
 
   def initialize(max)
@@ -30,7 +30,9 @@ attr_accessor :store
 end
 
 
-class IntSet
+class IntSet 
+  #solves the space complexity problem of MaxIntSet by buckets
+  #shortcoming: lookup time likely increases based on sub-array buckets being populated with unique elements (millions or thousands of elements)
   def initialize(num_buckets = 20)
     @store = Array.new(num_buckets) { Array.new }
     @num_buckets = num_buckets
@@ -59,7 +61,8 @@ class IntSet
   end
 end
 
-class ResizingIntSet
+class ResizingIntSet 
+  #applies concept of amortization -- 
   attr_reader :count
 
   def initialize(num_buckets = 20)
@@ -91,6 +94,7 @@ class ResizingIntSet
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
+    #you have O(1) look up time here until resize and the resize gets us constant time again b/c lookup in an array of 1 element is constant
   end
 
   def num_buckets
